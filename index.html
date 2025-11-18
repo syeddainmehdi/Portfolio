@@ -1,0 +1,866 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <title>Syeddain Mehdi - Frontend Developer</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #0c0c0c 0%, #1a1a2e 50%, #16213e 100%);
+            color: #e0e0e0;
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navigation */
+        nav {
+            position: fixed;
+            top: 0;
+            width: 100%;
+            background: rgba(12, 12, 12, 0.95);
+            backdrop-filter: blur(10px);
+            z-index: 1000;
+            padding: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .nav-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        .logo {
+            font-size: 1.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 2rem;
+        }
+
+        .nav-links a {
+            color: #e0e0e0;
+            text-decoration: none;
+            transition: all 0.3s ease;
+            position: relative;
+        }
+
+        .nav-links a:hover {
+            color: #667eea;
+        }
+
+        .nav-links a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section */
+        .hero {
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: url('data:image/svg+xml,<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1000 1000"><defs><radialGradient id="grad" cx="50%" cy="50%" r="50%"><stop offset="0%" style="stop-color:%23667eea;stop-opacity:0.1" /><stop offset="100%" style="stop-color:%23764ba2;stop-opacity:0" /></radialGradient></defs><circle cx="200" cy="200" r="150" fill="url(%23grad)" /><circle cx="800" cy="400" r="100" fill="url(%23grad)" /><circle cx="400" cy="800" r="120" fill="url(%23grad)" /></svg>');
+            animation: float 20s ease-in-out infinite;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translateY(0px) rotate(0deg); }
+            25% { transform: translateY(-20px) rotate(5deg); }
+            50% { transform: translateY(0px) rotate(10deg); }
+            75% { transform: translateY(-10px) rotate(5deg); }
+        }
+
+        .hero-content {
+            z-index: 2;
+            position: relative;
+        }
+
+        .hero h1 {
+            font-size: clamp(3rem, 8vw, 6rem);
+            font-weight: 800;
+            margin-bottom: 1rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero .subtitle {
+            font-size: clamp(1.2rem, 3vw, 1.8rem);
+            color: #a0a0a0;
+            margin-bottom: 2rem;
+            animation: fadeInUp 1s ease-out 0.3s both;
+        }
+
+        .hero .description {
+            font-size: 1.1rem;
+            color: #c0c0c0;
+            max-width: 600px;
+            margin: 0 auto 3rem;
+            animation: fadeInUp 1s ease-out 0.6s both;
+        }
+
+        .cta-button {
+            display: inline-block;
+            padding: 15px 40px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            text-decoration: none;
+            border-radius: 50px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+            animation: fadeInUp 1s ease-out 0.9s both;
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Section Styles */
+        section {
+            padding: 100px 0;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: 2.5rem;
+            font-weight: 700;
+            margin-bottom: 1.5rem;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .section-subtitle {
+            text-align: center;
+            color: #a0a0a0;
+            font-size: 1.1rem;
+            margin-bottom: 3rem;
+        }
+
+        /* About Section */
+        .about-content {
+            display: grid;
+            grid-template-columns: 1fr 2fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .about-image {
+            width: 300px;
+            height: 300px;
+            border-radius: 20px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 4rem;
+            color: white;
+            margin: 0 auto;
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.3);
+        }
+
+        .about-image img {
+            width: 98%;
+            height: 98%;
+            object-fit: cover;
+            border-radius: 20px;
+        }
+
+        .about-text {
+            font-size: 1.1rem;
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+
+        .about-text h3 {
+            color: #667eea;
+            margin-bottom: 1rem;
+            font-size: 1.5rem;
+        }
+
+        /* Results / Stats Section */
+        .stats {
+            background: rgba(255, 255, 255, 0.02);
+            padding: 80px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 2.2rem;
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 24px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-10px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .stat-number {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-label {
+            color: #a0a0a0;
+            font-size: 1.1rem;
+        }
+
+        /* Experience Section */
+        .experience-grid {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .experience-card {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2.5rem;
+            transition: all 0.3s ease;
+        }
+
+        .experience-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 20px 60px rgba(102, 126, 234, 0.2);
+            border-color: rgba(102, 126, 234, 0.3);
+        }
+
+        .experience-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 1.5rem;
+            flex-wrap: wrap;
+            gap: 1rem;
+        }
+
+        .experience-title {
+            font-size: 1.5rem;
+            font-weight: 700;
+            color: #667eea;
+            margin-bottom: 0.5rem;
+        }
+
+        .experience-company {
+            font-size: 1.2rem;
+            color: #e0e0e0;
+            font-weight: 500;
+        }
+
+        .experience-date {
+            color: #a0a0a0;
+            font-size: 0.9rem;
+            text-align: right;
+        }
+
+        .experience-tags {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem;
+            margin-bottom: 1rem;
+        }
+
+        .tag {
+            background: rgba(102, 126, 234, 0.2);
+            color: #667eea;
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 500;
+        }
+
+        .experience-description {
+            color: #c0c0c0;
+            line-height: 1.8;
+        }
+
+        .experience-description ul {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .experience-description li {
+            padding-left: 1.5rem;
+            margin-bottom: 0.8rem;
+            position: relative;
+        }
+
+        .experience-description li::before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        /* Technical Skills Section */
+        .skills-categories {
+            display: grid;
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .skill-category {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 2rem;
+        }
+
+        .skill-category h3 {
+            color: #667eea;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .skills-list {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.8rem;
+        }
+
+        .skill-item {
+            background: rgba(102, 126, 234, 0.15);
+            color: #e0e0e0;
+            padding: 8px 18px;
+            border-radius: 25px;
+            font-size: 0.95rem;
+            transition: all 0.3s ease;
+            border: 1px solid rgba(102, 126, 234, 0.3);
+        }
+
+        .skill-item:hover {
+            background: rgba(102, 126, 234, 0.3);
+            transform: translateY(-2px);
+        }
+
+        /* Contact Section */
+        .contact {
+            background: rgba(255, 255, 255, 0.02);
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        .contact-content {
+            text-align: center;
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .contact-info {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 3rem;
+            margin-top: 3rem;
+        }
+
+        .contact-email {
+            display: inline-block;
+            font-size: 1.3rem;
+            color: #667eea;
+            text-decoration: none;
+            margin: 1rem 0;
+            transition: all 0.3s ease;
+        }
+
+        .contact-email:hover {
+            color: #764ba2;
+            transform: scale(1.05);
+        }
+
+        .social-links {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .social-link {
+            display: inline-block;
+            padding: 15px;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border-radius: 50%;
+            text-decoration: none;
+            font-size: 1.5rem;
+            transition: all 0.3s ease;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .social-link:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(102, 126, 234, 0.4);
+        }
+
+        /* Footer */
+        footer {
+            background: rgba(0, 0, 0, 0.3);
+            text-align: center;
+            padding: 2rem 0;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+
+            .hero h1 {
+                font-size: 3rem;
+            }
+
+            .about-content {
+                grid-template-columns: 1fr;
+                gap: 2rem;
+            }
+
+            .about-image {
+                width: 250px;
+                height: 250px;
+            }
+
+            .experience-header {
+                flex-direction: column;
+            }
+
+            .experience-date {
+                text-align: left;
+            }
+        }
+
+        /* Scroll animations */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.6s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Custom scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+
+        ::-webkit-scrollbar-track {
+            background: #1a1a2e;
+        }
+
+        ::-webkit-scrollbar-thumb {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="nav-container">
+            <div class="logo">Syeddain Mehdi</div>
+            <ul class="nav-links">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#results">Results</a></li>
+                <li><a href="#about">About Me</a></li>
+                <li><a href="#experience">Experience</a></li>
+                <li><a href="#skills">Skills</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <section id="home" class="hero">
+        <div class="hero-content">
+            <h1>Syeddain Mehdi</h1>
+            <p class="subtitle">Aspiring Digital Marketing Professional & Entrepreneur</p>
+            <p class="description">
+                Passionate about driving growth through high-converting ad campaigns and AI-powered marketing. I specialize in Meta Ads, lead generation, and content strategy, helping brands generate results with data-backed execution and creative performance marketing.
+            </p>
+            <div style="display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;">
+                <a href="#contact" class="cta-button">Let's Connect</a>
+                <a href="Syeddain's Resume.pdf" target="_blank" download class="cta-button" style="background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); animation: fadeInUp 1s ease-out 1.2s both;">Resume</a>
+            </div>
+        </div>
+    </section>
+
+    <section id="about" class="about">
+        <div class="container">
+            <h2 class="section-title fade-in">About Me</h2>
+            <div class="about-content fade-in">
+                <div class="about-image">
+                    <img src="sy.png">
+                </div>
+                <div class="about-text">
+                    <h3>Hello! I'm Syeddain Mehdi</h3>
+                    <p>
+                        I'm a digital marketing professional with hands-on experience driving real business results through strategic campaigns. As the founder of SM AI Solutions, I've managed everything from Meta ads to content creation, helping clients generate qualified leads and close significant contracts across international markets.
+                        My journey in digital marketing started while studying at Toronto Metropolitan University, where I combined classroom learning with real-world application. I launched my own business, ran campaigns for local businesses, and discovered my passion for turning data and creative strategy into measurable ROI.
+                        
+                        I'm actively seeking marketing internship opportunities where I can bring my entrepreneurial experience, contribute to impactful campaigns, and learn from industry professionals while helping businesses grow.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Results That Matter Section -->
+    <section id="results" class="stats">
+        <div class="container">
+            <h2 class="section-title fade-in">Results That Matter</h2>
+            <p class="section-subtitle fade-in">Real numbers from real campaigns</p>
+
+            <div class="stats-grid">
+                <div class="stat-card fade-in">
+                    <div class="stat-number">450+</div>
+                    <div class="stat-label">Qualified B2B Leads</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">$200K</div>
+                    <div class="stat-label">Client Contract Value</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">18%</div>
+                    <div class="stat-label">Conversion Rate</div>
+                </div>
+                <div class="stat-card fade-in">
+                    <div class="stat-number">32%</div>
+                    <div class="stat-label">Traffic Increase</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Experience Section -->
+    <section id="experience">
+        <div class="container">
+            <h2 class="section-title fade-in">Experience</h2>
+            <p class="section-subtitle fade-in">Building brands and driving results</p>
+            
+            <div class="experience-grid">
+                <div class="experience-card fade-in">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">Founder & Digital Marketer</div>
+                            <div class="experience-company">SM AI Solutions</div>
+                        </div>
+                        <div class="experience-date">
+                            <div>Mississauga, ON</div>
+                            <div>Dec 2024 - Present</div>
+                        </div>
+                    </div>
+                    <div class="experience-tags">
+                        <span class="tag">Meta Ads</span>
+                        <span class="tag">Social Media</span>
+                        <span class="tag">Video Content</span>
+                        <span class="tag">Lead Generation</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Launched an AI services company specializing in AI receptionists and lead generation, building brand through self-produced video content and social media campaigns across Meta & Google platforms.</li>
+                            <li>Empowered an Australian plumbing client to acquire 13 new commercial contracts worth $200,000 AUD through locally targeted Meta ad campaigns, demonstrating ability to deliver results across international markets.</li>
+                            <li>Generated 450+ qualified B2B leads at $4.45 cost-per-lead through targeted digital campaigns, securing 85 meetings and closing 15 contracts with an 18% conversion rate.</li>
+                            <li>Oversaw end-to-end marketing operations including $2,000 ad budget, A/B testing, audience targeting, content creation, and analytics tracking that drove 20,000+ impressions across 14,500+ unique users.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">Associate / Digital Marketing</div>
+                            <div class="experience-company">Classic Bowl</div>
+                        </div>
+                        <div class="experience-date">
+                            <div>Mississauga, ON</div>
+                            <div>March 2022 - Present</div>
+                        </div>
+                    </div>
+                    <div class="experience-tags">
+                        <span class="tag">Meta Campaigns</span>
+                        <span class="tag">Local Marketing</span>
+                        <span class="tag">Customer Service</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Designed and managed Meta ad campaign with a $500 budget that increased weekend foot traffic by 32%, generating 450+ clicks and reaching 3,500 local customers.</li>
+                            <li>Delivered exceptional customer service to 50+ diverse daily customers and collaborated with team members to achieve sales targets and service standards.</li>
+                        </ul>
+                    </div>
+                </div>
+
+                <div class="experience-card fade-in">
+                    <div class="experience-header">
+                        <div>
+                            <div class="experience-title">Financial Associate</div>
+                            <div class="experience-company">ClearPack - Accessibility in Medical Packaging</div>
+                        </div>
+                        <div class="experience-date">
+                            <div>Toronto, ON</div>
+                            <div>Sep 2025 – Nov 2025</div>
+                        </div>
+                    </div>
+                    <div class="experience-tags">
+                        <span class="tag">University Project</span>
+                        <span class="tag">Budget Management</span>
+                        <span class="tag">Team Collaboration</span>
+                    </div>
+                    <div class="experience-description">
+                        <ul>
+                            <li>Collaborated with a 9-member team to develop accessible medical packaging solutions for adults aged 50-80 with visual or cognitive impairments.</li>
+                            <li>Managed project budget allocation and cost analysis for social media advertising, organisational software, and creative tools.</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Technical Skills Section -->
+    <section id="skills">
+        <div class="container">
+            <h2 class="section-title fade-in">Technical Skills</h2>
+            <p class="section-subtitle fade-in">Tools and expertise I bring to every project</p>
+            
+            <div class="skills-categories">
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-bullhorn"></i> Digital Marketing</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Meta Ads Manager</span>
+                        <span class="skill-item">Social Media Marketing</span>
+                        <span class="skill-item">Content Creation</span>
+                        <span class="skill-item">Video Production</span>
+                        <span class="skill-item">Copywriting</span>
+                        <span class="skill-item">B2B Marketing</span>
+                        <span class="skill-item">Lead Generation</span>
+                        <span class="skill-item">Campaign Optimization</span>
+                        <span class="skill-item">A/B Testing</span>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-palette"></i> Design & Creative</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Adobe Illustrator</span>
+                        <span class="skill-item">Adobe Photoshop</span>
+                        <span class="skill-item">Adobe InDesign</span>
+                        <span class="skill-item">Canva</span>
+                        <span class="skill-item">Video Editing</span>
+                        <span class="skill-item">Graphic Design</span>
+                        <span class="skill-item">Marketing Collateral</span>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-chart-line"></i> Analytics & Tools</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Facebook Analytics</span>
+                        <span class="skill-item">Google Analytics</span>
+                        <span class="skill-item">Meta Business Suite</span>
+                        <span class="skill-item">Performance Tracking</span>
+                        <span class="skill-item">ROI Analysis</span>
+                        <span class="skill-item">Conversion Tracking</span>
+                    </div>
+                </div>
+
+                <div class="skill-category fade-in">
+                    <h3><i class="fas fa-star"></i> Core Strengths</h3>
+                    <div class="skills-list">
+                        <span class="skill-item">Business Development</span>
+                        <span class="skill-item">Campaign Management</span>
+                        <span class="skill-item">Budget Management</span>
+                        <span class="skill-item">Performance Analytics</span>
+                        <span class="skill-item">Entrepreneurial Mindset</span>
+                        <span class="skill-item">Problem-Solving</span>
+                        <span class="skill-item">Communication</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section id="contact" class="contact">
+        <div class="container">
+            <h2 class="section-title fade-in">Get In Touch</h2>
+            <div class="contact-content fade-in">
+                <p>I'm always open to discussing new opportunities, interesting projects, or just having a chat about web development!</p>
+                
+                <div class="contact-info">
+                    <h3>Let's Connect</h3>
+                    <p>Ready to start my journey in frontend development and eager to contribute to your team.</p>
+                    <a href="mailto:mehdisyeddain@gmail.com" class="contact-email">
+                        mehdisyeddain@gmail.com
+                    </a>
+                    
+                    <div class="social-links">
+                        <a href="https://www.linkedin.com/in/syeddain-mehdi-2799a5398/" target="_blank" class="social-link" title="LinkedIn">
+                            <i class="fab fa-linkedin-in"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer>
+        <div class="container">
+            <p>&copy; 2025 Syeddain Mehdi. Designed with ❤️ and lots of ☕</p>
+        </div>
+    </footer>
+
+    <script>
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Intersection Observer for fade-in animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Add navbar background on scroll
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 100) {
+                nav.style.background = 'rgba(12, 12, 12, 0.98)';
+            } else {
+                nav.style.background = 'rgba(12, 12, 12, 0.95)';
+            }
+        });
+
+        // Add typing effect to hero subtitle
+        const subtitle = document.querySelector('.hero .subtitle');
+        const text = 'Aspiring Digital Marketing Professional & Entrepreneur';
+        let index = 0;
+
+        function typeWriter() {
+            if (index < text.length) {
+                subtitle.textContent = text.slice(0, index + 1);
+                index++;
+                setTimeout(typeWriter, 100);
+            }
+        }
+
+        // Start typing effect after page loads
+        window.addEventListener('load', () => {
+            setTimeout(() => {
+                subtitle.textContent = '';
+                typeWriter();
+            }, 1000);
+        });
+    </script>
+</body>
+</html>
